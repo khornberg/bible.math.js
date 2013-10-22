@@ -64,7 +64,6 @@ for (var i=0; i<args.length; i++) {
         chapters = bible.Books[args[0].bookIndex].verses.length;
     }
     //chapter2 and verse2 are not set, expects a second argument
-    //bookIndex set?
     //neither distance can be calculated, returning null
     else {
         return {'chapters': chapters, 'verses': verses};
