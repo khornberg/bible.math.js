@@ -16,10 +16,12 @@
  *      chapter2: _chapter2,
  *      verse2: _verse2
  *
- *  bookIndex and chapters are 0 based arrays
+ *  bookIndex is a 0 based array
+ *  chapters are expected as a 1 based array (how you see it in the bible) 
+ *  and are normalized to a 0 based array
  */
 
-bible.distance = function() {
+bible.distance = function () {
  //arguments received
  var args = arguments;
  var chapters = null;
@@ -41,6 +43,11 @@ bible.distance = function() {
         endRef = args[0];
     }
  }
+    
+// Normalize chapters to 0 based arrays
+for (var i=0; i<args.length; i++) { 
+    bible.normalize(args[i]);
+}
 
  //1 argument
  if (args.length == 1) {
@@ -134,6 +141,7 @@ bible.verseDistance = function(bookIndex, chapter1, chapter2) {
 * @param {int} verses Number of verses to add 
 */
 bible.add = function (reference, verses) {
+    bible.normalize(reference);
     while (verses !== 0) {
         var chapterVerses = bible.Books[reference.bookIndex].verses[reference.chapter1];
 
@@ -157,6 +165,8 @@ bible.add = function (reference, verses) {
         }
     }
 
+    // Change chapter1 back to a 1 based array
+    if (reference.chapter1 >= 0 ) reference.chapter1++;
     return reference;
 }
 
@@ -166,6 +176,7 @@ bible.add = function (reference, verses) {
 * @param {int} verses Number of verses to subtract 
 */
 bible.subtract = function (reference, verses) {
+    bible.normalize(reference);
     while (verses !== 0) {
         if (reference.verse1 - verses > 0) {
             reference.verse1 = reference.verse1 - verses;
@@ -192,8 +203,20 @@ bible.subtract = function (reference, verses) {
             }
         }
     }
-
+    
+    // Change chapter1 back to a 1 based array
+    if (reference.chapter1 >= 0 ) reference.chapter1++;
     return reference;
+}
+
+/**
+* Changes chapter numbers to 0 based arrays (subtracts 1 from the chapters)
+* @param {object} reference Reference passed by reference
+*/
+bible.normalize = function (reference) {
+//    reference.chapter = (reference.chapter > 0) ? reference.chapter - 1 : reference.chapter;
+    reference.chapter1 = (reference.chapter1 > 0) ? reference.chapter1 - 1 : reference.chapter1;
+    reference.chapter2 = (reference.chapter2 > 0) ? reference.chapter2 - 1 : reference.chapter2;
 }
 
 //sdg

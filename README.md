@@ -7,6 +7,13 @@ Provides methods to add or subtract verses from a given reference and to get a d
 
 Include `bible.math.js` in your project. You must also have `bible.js` and `bible.reference.js` included as well.
 
+The indended usage is used in conjunction with `bible.parseReference` to get an reference object.
+
+```
+var ref = bible.parseReference('Romans 1:2");
+bible.add(ref, 10); //returns reference to Romans 1:12
+```
+
 ### Methods
 All references use the [bible.Reference object](#bible.reference-object) format.
 
@@ -68,7 +75,6 @@ chapter2: _chapter2,
 verse2: _verse2
 ```
 -1 as a value of any key represents not used.
-chapter values are based on 0 indexed arrays. This means that `chapter: 3` is actually Chapter 4 in the book.
 
 ### Licence
 Apache v2
