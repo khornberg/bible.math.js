@@ -83,5 +83,6 @@ verse2: _verse2
 Apache v2
 
 ### Copyright
-Kyle Hornberg  
-Extends John Dyer's bible.js and bible.reference.js in [bib.ly](bib.ly) which is copyrighted by him.
+Kyle Hornberg 
+
+Extends John Dyer's bible.js and bible.reference.js in [bib.ly](bib.ly) which is copyrighted by him and licensed under [Creative Commons 3.0](http://creativecommons.org/licenses/by/3.0/)

@@ -1,6 +1,6 @@
 /**
  * Calculates distance between verses by chapter and verse.
- * @depends on bible.js and bible.reference.js from bib.ly by John Dyer which are copyrighted by him
+ * @depends on bible.js and bible.reference.js from bib.ly by John Dyer which are copyrighted by him and licensed under CC BY 3.0
  *
  * @author khornberg
  * @version 0.1.0
