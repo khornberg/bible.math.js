@@ -1,3 +1,5 @@
+/* brackets - xunit: qunit */
+
 /** Verse distances */
 // Gen 2 - Gen 4
 test("verse distance same book", function() {
@@ -37,6 +39,37 @@ test("distance same book", function() {
     var resultDistance = bible.distance(ref1, ref2);
     var expectedResults = {'chapters': 0, 'verses': 3};
 	deepEqual(resultDistance, expectedResults);
+});
+
+// Gen 1:2 - Gen 1:3
+test("distance same book obj by ref?", function() {
+    var ref1 = {bookIndex: 0, chapter: 1, verse: 1, chapter1: 1, verse1: 1, chapter2: -1, verse2: -1};
+    var ref2 = {bookIndex: 0, chapter: 1, verse: 3, chapter1: 1, verse1: 3, chapter2: -1, verse2: -1};
+    console.info("before: " + JSON.stringify(ref1));
+    ref1 = bible.add(ref1, 4);
+    ref1 = bible.subtract(ref1, 3);
+    console.info("after: " + JSON.stringify(ref1));
+    var resultDistance = bible.distance(ref1, ref2);
+    console.info(JSON.stringify(ref1) + JSON.stringify(ref2));
+    var expectedResults = {'chapters': 0, 'verses': 2};
+	deepEqual(resultDistance, expectedResults);
+});
+
+// pass objects by ref?
+test("distance obj by ref1", function() {
+    var ref1 = {bookIndex: 0, chapter: 1, verse: 1, chapter1: 1, verse1: 1, chapter2: -1, verse2: -1};
+    var ref2 = {bookIndex: 0, chapter: 1, verse: 3, chapter1: 1, verse1: 3, chapter2: -1, verse2: -1};
+    var resultDistance = bible.distance(ref1, ref2);
+    console.info(JSON.stringify(ref1) + JSON.stringify(ref2));
+	deepEqual(ref1, {bookIndex: 0, chapter: 1, verse: 1, chapter1: 1, verse1: 1, chapter2: -1, verse2: -1});
+});
+
+test("distance obj by ref2", function() {
+    var ref1 = {bookIndex: 0, chapter: 1, verse: 1, chapter1: 1, verse1: 1, chapter2: -1, verse2: -1};
+    var ref2 = {bookIndex: 0, chapter: 1, verse: 3, chapter1: 1, verse1: 3, chapter2: -1, verse2: -1};
+    var resultDistance = bible.distance(ref1, ref2);
+    console.info(JSON.stringify(ref1) + JSON.stringify(ref2));
+	deepEqual(ref2, {bookIndex: 0, chapter: 1, verse: 3, chapter1: 1, verse1: 3, chapter2: -1, verse2: -1});
 });
 
 // Gen 1:1 - Gen 1:3

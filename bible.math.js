@@ -68,18 +68,23 @@ for (var i=0; i<args.length; i++) {
     else {
         return {'chapters': chapters, 'verses': verses};
     }
+    
+     // Change chapter1 back to a 1 based array
+    if (args[0].chapter1 >= 0 ) args[0].chapter1++;
+    if (args[0].chapter2 >= 0 ) args[0].chapter2++;
  }
  //2 arguments, any more are ignored
  else {
-    //calculate distance between args[0] chapter1, verse1 and args[1] chapter1, verse1 or chapter2, verse2 if set
-    if (endRef.chapter2 != -1 || endRef.verse2 != -1) {
-        endRef.verse = endRef.verse2;
-        endRef.chapter = endRef.chapter2;
-    }
-    else {
-        endRef.verse = endRef.verse1;
-        endRef.chapter = endRef.chapter1;
-    }
+     //created a nasty bug changing chapters
+     //calculate distance between args[0] chapter1, verse1 and args[1] chapter1, verse1 or chapter2, verse2 if set
+//    if (endRef.chapter2 != -1 || endRef.verse2 != -1) {
+//        endRef.verse = endRef.verse2;
+//        endRef.chapter = endRef.chapter2;
+//    }
+//    else {
+//        endRef.verse = endRef.verse1;
+//        endRef.chapter = endRef.chapter1;
+//    }
     
     // Book indices are different
     if(startRef.bookIndex !== endRef.bookIndex) {
@@ -94,7 +99,7 @@ for (var i=0; i<args.length; i++) {
         startBook = bible.Books[startRef.bookIndex].verses.length;
         versesBegin = bible.verseDistance(startRef.bookIndex, startRef.chapter1, startBook) - startRef.verse1 + 1;
         chaptersBegin = startBook - startRef.chapter1;
-        versesEnd = bible.verseDistance(endRef.bookIndex, 0, endRef.chapter) + endRef.verse;
+        versesEnd = bible.verseDistance(endRef.bookIndex, 0, endRef.chapter1) + endRef.verse;
         chaptersEnd = endRef.chapter1;
         
         //whole book distances
@@ -110,7 +115,13 @@ for (var i=0; i<args.length; i++) {
         verses = endRef.verse1 + bible.verseDistance(startRef.bookIndex, startRef.chapter1, endRef.chapter1) - startRef.verse1 + 1;
         chapters = endRef.chapter1 - startRef.chapter1;
     }
+     
+    // Change chapter1 back to a 1 based array
+    if (startRef.chapter1 >= 0 ) startRef.chapter1++;
+    if (endRef.chapter1 >= 0 ) endRef.chapter1++;
  }
+    
+ 
  
  return {'chapters': chapters, 'verses': verses};
 }
