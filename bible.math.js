@@ -46,7 +46,7 @@ bible.distance = function () {
     
 // Normalize chapters to 0 based arrays
 for (var i=0; i<args.length; i++) { 
-    bible.normalize(args[i]);
+    bible.denormalize(args[i]);
 }
 
  //1 argument
@@ -75,17 +75,6 @@ for (var i=0; i<args.length; i++) {
  }
  //2 arguments, any more are ignored
  else {
-     //created a nasty bug changing chapters
-     //calculate distance between args[0] chapter1, verse1 and args[1] chapter1, verse1 or chapter2, verse2 if set
-//    if (endRef.chapter2 != -1 || endRef.verse2 != -1) {
-//        endRef.verse = endRef.verse2;
-//        endRef.chapter = endRef.chapter2;
-//    }
-//    else {
-//        endRef.verse = endRef.verse1;
-//        endRef.chapter = endRef.chapter1;
-//    }
-    
     // Book indices are different
     if(startRef.bookIndex !== endRef.bookIndex) {
         var startBook = 0;
@@ -117,12 +106,13 @@ for (var i=0; i<args.length; i++) {
     }
      
     // Change chapter1 back to a 1 based array
-    if (startRef.chapter1 >= 0 ) startRef.chapter1++;
-    if (endRef.chapter1 >= 0 ) endRef.chapter1++;
+//    if (startRef.chapter1 >= 0 ) startRef.chapter1++;
+//    if (endRef.chapter1 >= 0 ) endRef.chapter1++;
+    bible.normalize(startRef);
+    bible.normalize(endRef);
+
  }
-    
- 
- 
+
  return {'chapters': chapters, 'verses': verses};
 }
 
@@ -151,7 +141,7 @@ bible.verseDistance = function(bookIndex, chapter1, chapter2) {
 * @param {int} verses Number of verses to add 
 */
 bible.add = function (reference, verses) {
-    bible.normalize(reference);
+    bible.denormalize(reference);
     while (verses !== 0) {
         var chapterVerses = bible.Books[reference.bookIndex].verses[reference.chapter1];
 
@@ -176,7 +166,12 @@ bible.add = function (reference, verses) {
     }
 
     // Change chapter1 back to a 1 based array
-    if (reference.chapter1 >= 0 ) reference.chapter1++;
+//    if (reference.chapter1 >= 0 ) {
+//        reference.chapter1++;
+//    }
+    bible.normalize(reference);
+
+    
     return reference;
 }
 
@@ -186,7 +181,7 @@ bible.add = function (reference, verses) {
 * @param {int} verses Number of verses to subtract 
 */
 bible.subtract = function (reference, verses) {
-    bible.normalize(reference);
+    bible.denormalize(reference);
     while (verses !== 0) {
         if (reference.verse1 - verses > 0) {
             reference.verse1 = reference.verse1 - verses;
@@ -215,7 +210,11 @@ bible.subtract = function (reference, verses) {
     }
     
     // Change chapter1 back to a 1 based array
-    if (reference.chapter1 >= 0 ) reference.chapter1++;
+//    if (reference.chapter1 >= 0 ) {
+//        reference.chapter1++;
+//    }
+    bible.normalize(reference);
+    
     return reference;
 }
 
@@ -223,10 +222,20 @@ bible.subtract = function (reference, verses) {
 * Changes chapter numbers to 0 based arrays (subtracts 1 from the chapters)
 * @param {object} reference Reference passed by reference
 */
-bible.normalize = function (reference) {
+bible.denormalize = function (reference) {
 //    reference.chapter = (reference.chapter > 0) ? reference.chapter - 1 : reference.chapter;
     reference.chapter1 = (reference.chapter1 > 0) ? reference.chapter1 - 1 : reference.chapter1;
     reference.chapter2 = (reference.chapter2 > 0) ? reference.chapter2 - 1 : reference.chapter2;
+}
+
+/**
+* Changes chapter numbers to 1 based arrays (add 1 to the chapters)
+* @param {object} reference Reference passed by reference
+*/
+bible.normalize = function (reference) {
+//    reference.chapter = (reference.chapter > 0) ? reference.chapter - 1 : reference.chapter;
+    reference.chapter1 = (reference.chapter1 > 0) ? reference.chapter1 + 1 : reference.chapter1;
+    reference.chapter2 = (reference.chapter2 > 0) ? reference.chapter2 + 1 : reference.chapter2;
 }
 
 //sdg
