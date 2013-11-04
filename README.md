@@ -79,6 +79,17 @@ verse2: _verse2
 ```
 -1 as a value of any key represents that the key is unused.
 
+
+## Change Log
+
+### 0.1.3
+* Stops when adding or subtracting past the ends of the bible
+
+### 0.1.2
+* Changed meaning of normalize function
+* Added denormalize function
+
+
 ### Licence
 Apache v2
 

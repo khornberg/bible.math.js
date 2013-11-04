@@ -158,14 +158,13 @@ bible.add = function (reference, verses) {
             //-1 for 0 indexed array
             if ((bible.Books[reference.bookIndex].verses.length - 1) < nextChapter) {
                 // Cannot add past the end of the bible
-//                if (reference.bookIndex === 65) {
-//                    reference.bookIndex = 65;
-//                    reference.chapter1 = 21;
-////                    verses = 0;
-//                } else {
+                if (reference.bookIndex === 65) {
+                    reference.verse1 = 21;
+                    break;
+                } else {
                     reference.bookIndex++;
                     reference.chapter1 = 0;
-//                }    
+                }    
             } else {
                 reference.chapter1++;
             }
@@ -205,9 +204,15 @@ bible.subtract = function (reference, verses) {
             var previousChapter = reference.chapter1 - 1;
             //0 indexed array
             if (previousChapter < 0) {
-                reference.bookIndex--;
-                reference.chapter1 = bible.Books[reference.bookIndex].verses.length - 1;
-                reference.verse1 = bible.Books[reference.bookIndex].verses[reference.chapter1] + 1;
+                // Cannot subtract past the beginning of the bible
+                if (reference.bookIndex === 0) {
+                    reference.verse1 = 1;
+                    break;
+                } else {
+                    reference.bookIndex--;
+                    reference.chapter1 = bible.Books[reference.bookIndex].verses.length - 1;
+                    reference.verse1 = bible.Books[reference.bookIndex].verses[reference.chapter1] + 1;
+                }
             } else {
                 reference.chapter1--;
                 reference.verse1 = bible.Books[reference.bookIndex].verses[reference.chapter1];

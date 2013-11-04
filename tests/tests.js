@@ -45,12 +45,12 @@ test("distance same book", function() {
 test("distance same book obj by ref?", function() {
     var ref1 = {bookIndex: 0, chapter: 1, verse: 1, chapter1: 1, verse1: 1, chapter2: -1, verse2: -1};
     var ref2 = {bookIndex: 0, chapter: 1, verse: 3, chapter1: 1, verse1: 3, chapter2: -1, verse2: -1};
-    console.info("before: " + JSON.stringify(ref1));
+//    console.info("before: " + JSON.stringify(ref1));
     ref1 = bible.add(ref1, 4);
     ref1 = bible.subtract(ref1, 3);
-    console.info("after: " + JSON.stringify(ref1));
+//    console.info("after: " + JSON.stringify(ref1));
     var resultDistance = bible.distance(ref1, ref2);
-    console.info(JSON.stringify(ref1) + JSON.stringify(ref2));
+//    console.info(JSON.stringify(ref1) + JSON.stringify(ref2));
     var expectedResults = {'chapters': 0, 'verses': 2};
 	deepEqual(resultDistance, expectedResults);
 });
@@ -60,7 +60,7 @@ test("distance obj by ref1", function() {
     var ref1 = {bookIndex: 0, chapter: 1, verse: 1, chapter1: 1, verse1: 1, chapter2: -1, verse2: -1};
     var ref2 = {bookIndex: 0, chapter: 1, verse: 3, chapter1: 1, verse1: 3, chapter2: -1, verse2: -1};
     var resultDistance = bible.distance(ref1, ref2);
-    console.info(JSON.stringify(ref1) + JSON.stringify(ref2));
+//    console.info(JSON.stringify(ref1) + JSON.stringify(ref2));
 	deepEqual(ref1, {bookIndex: 0, chapter: 1, verse: 1, chapter1: 1, verse1: 1, chapter2: -1, verse2: -1});
 });
 
@@ -68,7 +68,7 @@ test("distance obj by ref2", function() {
     var ref1 = {bookIndex: 0, chapter: 1, verse: 1, chapter1: 1, verse1: 1, chapter2: -1, verse2: -1};
     var ref2 = {bookIndex: 0, chapter: 1, verse: 3, chapter1: 1, verse1: 3, chapter2: -1, verse2: -1};
     var resultDistance = bible.distance(ref1, ref2);
-    console.info(JSON.stringify(ref1) + JSON.stringify(ref2));
+//    console.info(JSON.stringify(ref1) + JSON.stringify(ref2));
 	deepEqual(ref2, {bookIndex: 0, chapter: 1, verse: 3, chapter1: 1, verse1: 3, chapter2: -1, verse2: -1});
 });
 
@@ -137,10 +137,28 @@ test("add verses past end of bible", function() {
     deepEqual(result, expectedResults);
 });
 
+// Jude 1:1 + 10 000 = Rev 22:21
+test("add 10 000 verses past end of bible", function() {
+    var ref1 = {bookIndex: 64, chapter: 1, verse: 1, chapter1: 1, verse1: 1, chapter2: -1, verse2: -1};
+    var n = 10000;
+    var result = bible.add(ref1, n);
+    var expectedResults = {bookIndex: 65, chapter: 1, verse: 1, chapter1: 22, verse1: 21, chapter2: -1, verse2: -1};
+    deepEqual(result, expectedResults);
+});
+
 // Gen 1:6 - 10 = Gen 1:1
 test("subtract verses from beginning of bible", function() {
     var ref1 = {bookIndex: 0, chapter: 1, verse: 6, chapter1: 1, verse1: 6, chapter2: -1, verse2: -1};
     var n = 10;
+    var result = bible.subtract(ref1, n);
+    var expectedResults = {bookIndex: 0, chapter: 1, verse: 6, chapter1: 1, verse1: 1, chapter2: -1, verse2: -1};
+    deepEqual(result, expectedResults);
+});
+
+// Gen 3:6 - 10 000 = Gen 1:1
+test("subtract 10 000 verses from beginning of bible", function() {
+    var ref1 = {bookIndex: 3, chapter: 1, verse: 6, chapter1: 1, verse1: 6, chapter2: -1, verse2: -1};
+    var n = 10000;
     var result = bible.subtract(ref1, n);
     var expectedResults = {bookIndex: 0, chapter: 1, verse: 6, chapter1: 1, verse1: 1, chapter2: -1, verse2: -1};
     deepEqual(result, expectedResults);
