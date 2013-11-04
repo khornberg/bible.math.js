@@ -157,8 +157,15 @@ bible.add = function (reference, verses) {
             var nextChapter = reference.chapter1 + 1;
             //-1 for 0 indexed array
             if ((bible.Books[reference.bookIndex].verses.length - 1) < nextChapter) {
-                reference.bookIndex++;
-                reference.chapter1 = 0;
+                // Cannot add past the end of the bible
+//                if (reference.bookIndex === 65) {
+//                    reference.bookIndex = 65;
+//                    reference.chapter1 = 21;
+////                    verses = 0;
+//                } else {
+                    reference.bookIndex++;
+                    reference.chapter1 = 0;
+//                }    
             } else {
                 reference.chapter1++;
             }
@@ -170,7 +177,6 @@ bible.add = function (reference, verses) {
 //        reference.chapter1++;
 //    }
     bible.normalize(reference);
-
     
     return reference;
 }
@@ -234,8 +240,8 @@ bible.denormalize = function (reference) {
 */
 bible.normalize = function (reference) {
 //    reference.chapter = (reference.chapter > 0) ? reference.chapter - 1 : reference.chapter;
-    reference.chapter1 = (reference.chapter1 > 0) ? reference.chapter1 + 1 : reference.chapter1;
-    reference.chapter2 = (reference.chapter2 > 0) ? reference.chapter2 + 1 : reference.chapter2;
+    reference.chapter1 = (reference.chapter1 >= 0) ? reference.chapter1 + 1 : reference.chapter1;
+    reference.chapter2 = (reference.chapter2 >= 0) ? reference.chapter2 + 1 : reference.chapter2;
 }
 
 //sdg

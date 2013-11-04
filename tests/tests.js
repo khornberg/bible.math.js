@@ -126,6 +126,26 @@ test("verse distance whole book error all -1", function() {
 
 // Other errors?
 
+// Edge cases
+
+// Rev 22:1 + 25 = Rev 22:21
+test("add verses past end of bible", function() {
+    var ref1 = {bookIndex: 65, chapter: 22, verse: 1, chapter1: 22, verse1: 1, chapter2: -1, verse2: -1};
+    var n = 25;
+    var result = bible.add(ref1, n);
+    var expectedResults = {bookIndex: 65, chapter: 22, verse: 1, chapter1: 22, verse1: 21, chapter2: -1, verse2: -1};
+    deepEqual(result, expectedResults);
+});
+
+// Gen 1:6 - 10 = Gen 1:1
+test("subtract verses from beginning of bible", function() {
+    var ref1 = {bookIndex: 0, chapter: 1, verse: 6, chapter1: 1, verse1: 6, chapter2: -1, verse2: -1};
+    var n = 10;
+    var result = bible.subtract(ref1, n);
+    var expectedResults = {bookIndex: 0, chapter: 1, verse: 6, chapter1: 1, verse1: 1, chapter2: -1, verse2: -1};
+    deepEqual(result, expectedResults);
+});
+
 
 /** Add tests */
 // 1 John 5:1 + 5 verses
