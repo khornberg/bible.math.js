@@ -124,6 +124,16 @@ test("verse distance whole book error all -1", function() {
     deepEqual(resultDistance, expectedResults);
 });
 
+// Gen 1 - Gen 2 verses
+// +1 verse because the whole of Gen 1 is counted and the first verse of Gen 2
+test("verse distance between whole chapters", function() {
+    var ref1 = {bookIndex: 0, chapter: 1, verse: -1, chapter1: 1, verse1: -1, chapter2: -1, verse2: -1};
+    var ref2 = {bookIndex: 0, chapter: 2, verse: -1, chapter1: 2, verse1: -1, chapter2: -1, verse2: -1};
+    var resultDistance = bible.distance(ref1, ref2);
+    var expectedResults = {'chapters': 1, 'verses': 32};
+    deepEqual(resultDistance, expectedResults);
+});
+
 // Other errors?
 
 // Edge cases
@@ -220,6 +230,15 @@ test("add 0 verses from middle of book", function() {
     deepEqual(result, expectedResults);
 });
 
+// Gen 2 + 10 verses
+test("add 10 verses from a chapter reference", function() {
+    var ref1 = {bookIndex: 0, chapter: 2, verse: -1, chapter1: 2, verse1: -1, chapter2: -1, verse2: -1};
+    var n = 10;
+    var result = bible.add(ref1, n);
+    var expectedResults = {bookIndex: 0, chapter: 2, verse: -1, chapter1: 2, verse1: 11, chapter2: -1, verse2: -1};
+    deepEqual(result, expectedResults);
+});
+
 /*Subtract Tests*/
 // 2 John 7 - 5 verses
 test("subtract 5 verses from middle of book", function() {
@@ -254,6 +273,15 @@ test("subtract 7 verses resulting in 0 verses from middle of book", function() {
     var n = 7;
     var result = bible.subtract(ref1, n);
     var expectedResults = {bookIndex: 61, chapter: 1, verse: 7, chapter1: 5, verse1: 21, chapter2: -1, verse2: -1};
+    deepEqual(result, expectedResults);
+});
+
+// Gen 2 - 10 verses
+test("subtract 10 verses from a chapter reference", function() {
+    var ref1 = {bookIndex: 0, chapter: 2, verse: -1, chapter1: 2, verse1: -1, chapter2: -1, verse2: -1};
+    var n = 10;
+    var result = bible.subtract(ref1, n);
+    var expectedResults = {bookIndex: 0, chapter: 2, verse: -1, chapter1: 1, verse1: 22, chapter2: -1, verse2: -1};
     deepEqual(result, expectedResults);
 });
 

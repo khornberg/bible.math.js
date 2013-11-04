@@ -237,6 +237,9 @@ bible.denormalize = function (reference) {
 //    reference.chapter = (reference.chapter > 0) ? reference.chapter - 1 : reference.chapter;
     reference.chapter1 = (reference.chapter1 > 0) ? reference.chapter1 - 1 : reference.chapter1;
     reference.chapter2 = (reference.chapter2 > 0) ? reference.chapter2 - 1 : reference.chapter2;
+    
+    // account for single chapter references
+    reference.verse1 = (reference.verse1 === -1 && reference.chapter1 >= 0) ? 1 : reference.verse1;
 }
 
 /**

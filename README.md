@@ -82,6 +82,9 @@ verse2: _verse2
 
 ## Change Log
 
+### 0.1.4
+* Handle whole chapter references
+
 ### 0.1.3
 * Stops when adding or subtracting past the ends of the bible
 
