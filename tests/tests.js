@@ -23,6 +23,24 @@ test("verse distance whole book", function() {
 	equal(resultDistance, expectedResults);
 });
 
+
+/** Distance **/
+// Gen 1
+test("distance whole chapter gen 1", function() {
+    var ref1 = {bookIndex: 0, chapter: 1, verse: -1, chapter1: 1, verse1: -1, chapter2: -1, verse2: -1};
+    var resultDistance = bible.distance(ref1);
+    var expectedResults = {'chapters': 1, 'verses': 31};
+	deepEqual(resultDistance, expectedResults);
+});
+
+// Psalm 150
+test("distance whole chapter ps 150", function() {
+    var ref1 = {bookIndex: 18, chapter: 150, verse: -1, chapter1: 150, verse1: -1, chapter2: -1, verse2: -1};
+    var resultDistance = bible.distance(ref1);
+    var expectedResults = {'chapters': 1, 'verses': 6};
+	deepEqual(resultDistance, expectedResults);
+});
+
 // Gen 2:5 - Lev 4:5
 test("distance partial book to partial book though another book", function() {
     var ref1 = {bookIndex: 0, chapter: 2, verse: 5, chapter1: 2, verse1: 5, chapter2: -1, verse2: -1};
@@ -109,7 +127,7 @@ test("verse distance same book chapter to chapter", function() {
 });
 
 // Col
-test("verse distance whole book", function() {
+test("verse distance whole book * must use custom reference", function() {
     var ref1 = {bookIndex: 50, chapter: -1, verse: -1, chapter1: -1, verse1: -1, chapter2: -1, verse2: -1};
     var resultDistance = bible.distance(ref1);
     var expectedResults = {'chapters': 4, 'verses': 95};
@@ -133,8 +151,6 @@ test("verse distance between whole chapters", function() {
     var expectedResults = {'chapters': 1, 'verses': 32};
     deepEqual(resultDistance, expectedResults);
 });
-
-// Other errors?
 
 // Edge cases
 
