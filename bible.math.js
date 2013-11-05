@@ -30,7 +30,7 @@ bible.distance = function () {
  var endRef = null;
     
  // Reference book check
- if (args[0].bookIndex < 0) return {'chapters': null, 'verses': null};
+ if (args[0].bookIndex < 0 || args[0].bookIndex > 65) return {'chapters': null, 'verses': null};
  
  // Sort references based on book order
  if (args.length > 1) {
