@@ -66,6 +66,9 @@ bible.distance(ref1, ref2); // returns {'chapters': 92, 'verses': 2766}
 The distance calculation includes the referenced verses. The distance between Gen 1:1 and Gen 1:3 is three.  
 Why? If one is reading verses Gen 1:1-3, one has read three verses.
 
+*Important*
+Distance can calculate the distance (chapters and verses) of an entire book, however the reference must be created manually. This is because `parseReference('Gen')` returns the same as `parseReference('Gen 1')`. The reference must set the chapter and chapter1 to -1.
+
 
 ##### bible.Reference object
 ```javascript
@@ -81,6 +84,10 @@ verse2: _verse2
 
 
 ## Change Log
+
+### 0.1.5
+* Fixed whole chapter references
+* Whole book distances not assumed any more
 
 ### 0.1.4
 * Handle whole chapter references
