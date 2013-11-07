@@ -103,7 +103,7 @@ bible.Books = [
 	,verses:[11,20,32,23,19,19,73,18,38,39,36,47,31]
 },
 {
-	names:split('Esther Es Est Esth')
+	names:split('Esther Es Est Esth Ester')
 	,verses:[22,23,15,17,14,14,10,17,32,3]
 },
 {
@@ -123,7 +123,7 @@ bible.Books = [
 	,verses:[18,26,22,16,20,12,29,17,18,20,10,14]
 },
 {
-	names:['Song of Solomon','SOS','Song of Songs']
+	names:['Song of Solomon','SOS','Song of Songs', 'SongOfSongs']
 	,verses:[17,17,11,16,16,13,13,14]
 },
 {
