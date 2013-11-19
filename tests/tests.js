@@ -311,7 +311,7 @@ test("distance ref equals add of verses ref", function() {
     var ref2 = {bookIndex: 2, chapter: 4, verse: 5, chapter1: 4, verse1: 5, chapter2: -1, verse2: -1};
     var verses = 2766;
     var addresult = bible.add(ref1, verses);
-    var addexpectedResults = {bookIndex: 2, chapter: 2, verse: 5, chapter1: 4, verse1: 6, chapter2: -1, verse2: -1}
+    var addexpectedResults = {bookIndex: 2, chapter: 2, verse: 5, chapter1: 4, verse1: 6, chapter2: -1, verse2: -1};
 	deepEqual(addresult, addexpectedResults);
 });
 
@@ -320,7 +320,7 @@ test("distance ref equals subtract of verses ref", function() {
     var ref2 = {bookIndex: 2, chapter: 4, verse: 5, chapter1: 4, verse1: 5, chapter2: -1, verse2: -1};
     var verses = 2766;
     var addresult = bible.subtract(ref2, verses);
-    var addexpectedResults = {bookIndex: 0, chapter: 4, verse: 5, chapter1: 2, verse1: 6, chapter2: -1, verse2: -1}
+    var addexpectedResults = {bookIndex: 0, chapter: 4, verse: 5, chapter1: 2, verse1: 6, chapter2: -1, verse2: -1};
 	deepEqual(addresult, addexpectedResults);
 });
 
