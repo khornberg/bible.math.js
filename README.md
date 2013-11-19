@@ -5,23 +5,24 @@ Provides methods to add or subtract verses from a given reference and to get a d
 
 ## Usage
 
-Include `bible.math.js` in your project. This is the only file from this repo you need. 
+Include `bible.math.min.js` in your project found in the `/dist`.
 
-You **must** have `bible.js` included in your project as well.  
-The latest versions are available from [bib.ly](https://github.com/johndyer/bibly).
-
-Using `bible.parseReference` (in `bible.reference.js`) to get a reference object is the easist way. You can, however, create an object as defined below and use it.
+Use `bible.parseReference` to get a reference object.  
+You can, however, manually create a reference object as defined below and use it.  
 
 ```
-var ref = bible.parseReference('Romans 1:2");
-bible.add(ref, 10); //returns reference to Romans 1:12
+var ref = bible.parseReference('Romans 1:2');
+bible.add(ref, 10); // changes reference object to Romans 1:12
+ref.toString(); // Romans 1:12 
 ```
+
+For those with Bower: `bower install bible.math --save`
 
 ### Methods
 All references use the [bible.Reference object](#bible.reference-object) format.
 
 #### Add
-`bible.add(reference, verses) // returns a new reference`
+`bible.add(reference, verses) // changes reference to new value`
 
 Example:
 Add 10 verses to 1 John 5:20
@@ -33,7 +34,7 @@ ref1.toString(); // returns "2 John 1:9"
 Keys chapter and verse of the returned object remain unchanged. Chapter1 and verse1 are the correct chapter and verse.  
 
 #### Subtract
-`bible.subtract(reference, verses) // returns a new reference`
+`bible.subtract(reference, verses) // changes reference to new value`
 
 Exmple:
 Subtract 10 verses from 2 John 7
@@ -67,8 +68,8 @@ The distance calculation includes the referenced verses. The distance between Ge
 Why? If one is reading verses Gen 1:1-3, one has read three verses.
 
 *Important*
-Distance can calculate the distance (chapters and verses) of an entire book, however the reference must be created manually. This is because `parseReference('Gen')` returns the same as `parseReference('Gen 1')`. The reference must set the chapter and chapter1 to -1.
-
+* Distance can calculate the distance (chapters and verses) of an entire book, however the reference must be created manually. This is because `parseReference('Gen')` returns the same as `parseReference('Gen 1')`. The reference must set the `chapter` and `chapter1` to `-1`.  
+* New objects are not created. The math is performed on the passed object.
 
 ##### bible.Reference object
 ```javascript
@@ -82,12 +83,19 @@ verse2: _verse2
 ```
 -1 as a value of any key represents that the key is unused.
 
+### Testing
+Tests are found in the `tests` directory.  
+Tests can be run either mannually by opening `tests/tests.html` in a browser or via Grunt.
 
 ## Change Log
 
+### 0.1.6
+* Distribute as single file
+* Added Grunt for tests, concat, and minify
+
 ### 0.1.5
 * Fixed whole chapter references
-* Whole book distances not assumed any more
+* Whole book distances are not assumed any more
 
 ### 0.1.4
 * Handle whole chapter references
