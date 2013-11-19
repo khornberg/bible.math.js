@@ -115,7 +115,7 @@ for (var i=0; i<args.length; i++) {
  }
 
  return {'chapters': chapters, 'verses': verses};
-}
+};
 
 /** 
 * Calculate distance between two chapters of a book
@@ -134,7 +134,7 @@ bible.verseDistance = function(bookIndex, chapter1, chapter2) {
     }
     
     return verses;
-}
+};
 
 /** 
 * Add verses to a bible reference 
@@ -179,7 +179,7 @@ bible.add = function (reference, verses) {
     bible.normalize(reference);
     
     return reference;
-}
+};
 
 /** 
 * Subtract verses from a bible reference 
@@ -196,7 +196,7 @@ bible.subtract = function (reference, verses) {
         if (reference.verse1 - verses > 0) {
             reference.verse1 = reference.verse1 - verses;
             verses = 0;
-        } else if (reference.verse1 - verses == 0) {
+        } else if (reference.verse1 - verses === 0) {
             reference.bookIndex--;
             reference.chapter1 = bible.Books[reference.bookIndex].verses.length - 1;
             reference.verse1 = bible.Books[reference.bookIndex].verses[reference.chapter1];
@@ -228,7 +228,7 @@ bible.subtract = function (reference, verses) {
     bible.normalize(reference);
     
     return reference;
-}
+};
 
 /**
 * Changes chapter numbers to 0 based arrays (subtracts 1 from the chapters)
@@ -238,7 +238,7 @@ bible.denormalize = function (reference) {
 //    reference.chapter = (reference.chapter > 0) ? reference.chapter - 1 : reference.chapter;
     reference.chapter1 = (reference.chapter1 > 0) ? reference.chapter1 - 1 : reference.chapter1;
     reference.chapter2 = (reference.chapter2 > 0) ? reference.chapter2 - 1 : reference.chapter2;
-}
+};
 
 /**
 * Changes chapter numbers to 1 based arrays (add 1 to the chapters)
@@ -248,6 +248,6 @@ bible.normalize = function (reference) {
 //    reference.chapter = (reference.chapter > 0) ? reference.chapter - 1 : reference.chapter;
     reference.chapter1 = (reference.chapter1 >= 0) ? reference.chapter1 + 1 : reference.chapter1;
     reference.chapter2 = (reference.chapter2 >= 0) ? reference.chapter2 + 1 : reference.chapter2;
-}
+};
 
 //sdg
