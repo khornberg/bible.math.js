@@ -1,6 +1,6 @@
 {
   "name": "bible.math",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Parses bible references and can do math on them. A math extention to John Dyer's bib.ly.",
   "main": "/dist/bible.math.js",
   "directories": {
