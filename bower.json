@@ -3,6 +3,7 @@
   "main": "dist/bible.math.js",
   "version": "0.1.6",
   "homepage": "https://github.com/khornberg/bible.math.js",
+  "readme": "README.md",
   "authors": [
     "Kyle Hornberg <kyle.hornberg@gmail.com>"
   ],
