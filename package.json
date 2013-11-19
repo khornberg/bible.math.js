@@ -1,0 +1,45 @@
+{
+  "name": "bible.math",
+  "version": "0.1.5",
+  "description": "Parses bible references and can do math on them. A math extention to John Dyer's bib.ly.",
+  "main": "/dist/bible.math.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-uglify": "~0.2.7",
+    "grunt-contrib-jshint": "~0.7.2",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-contrib-qunit": "~0.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/khornberg/bible.math.js.git"
+  },
+  "keywords": [
+    "bible",
+    "math",
+    "reference",
+    "verse",
+    "scripture"
+  ],
+  "author": "Kyle Hornberg",
+  "licenses": [
+    {
+     "type": "Creative Commons by 3.0",
+     "url": "http://creativecommons.org/licenses/by/3.0/"
+    },
+    {
+     "type": "Apache v2"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/khornberg/bible.math.js/issues"
+  }
+}

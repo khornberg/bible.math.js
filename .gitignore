@@ -1,1 +1,2 @@
-/tests/tests
+tests/qunit-1.12.0
+node_modules
