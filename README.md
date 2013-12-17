@@ -89,6 +89,9 @@ Tests can be run either mannually by opening `tests/tests.html` in a browser or 
 
 ## Change Log
 
+### 0.1.7
+* Fix book names in bible.js
+
 ### 0.1.6
 * Distribute as single file
 * Added Grunt for tests, concat, and minify

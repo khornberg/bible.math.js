@@ -183,7 +183,7 @@ bible.Books = [
 	,verses:[18,15,20]
 },
 {
-	names:split('Haggia Ha Hag Hagg')
+	names:split('Haggai Ha Hag Hagg')
 	,verses:[15,23]
 },
 {
@@ -283,15 +283,15 @@ bible.Books = [
 	,verses:[21,22,18]
 },
 {
-	names:ordinals(1,'John Jo Jn J')
+	names:ordinals(1,'John Joh Jo Jn J')
 	,verses:[10,29,24,21,21]
 },
 {
-	names:ordinals(2,'John Jo Jn J')
+	names:ordinals(2,'John Joh Jo Jn J')
 	,verses:[13]
 },
 {
-	names:ordinals(3,'John Jo Jn J')
+	names:ordinals(3,'John Joh Jo Jn J')
 	,verses:[14]
 },
 {

@@ -1,7 +1,7 @@
 {
   "name": "bible.math",
-  "main": "dist/bible.math.js",
-  "version": "0.1.6",
+  "main": "dist/bible.math.min.js",
+  "version": "0.1.7",
   "homepage": "https://github.com/khornberg/bible.math.js",
   "readme": "README.md",
   "authors": [
