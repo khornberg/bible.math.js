@@ -4,10 +4,10 @@ var bible = {};
 	var split = function(input) {
 			return input.split(' ');
 		},
-		// 
+		//
 		ordinals = function(number,input) {
-			var parts = input.split(' '), 
-				result = [], 
+			var parts = input.split(' '),
+				result = [],
 				ords = null,
 				i,il,j,jl;
 			if (number == 1) {
@@ -25,17 +25,17 @@ var bible = {};
 					if (j === 0) {
 						result.push(ords[j] + parts[i]);
 					}
-				}			
-			}				
-			
+				}
+			}
+
 			// second item should be short URL version
 			result.unshift(ords[0] + parts[1]);
 			// first should be the full name
 			result.unshift(ords[0] + ' ' + parts[0]);
-			
+
 			return result;
 		};
-	
+
 
 bible.Books = [
 {
@@ -311,7 +311,7 @@ bible.genNames= function() {
 	for (; i<il; i++) {
 		names.push( bible.Books[i].names.join('|') );
 	}
-	
+
 	return names.join('|');
 };;bible.parseReference = function (textReference) {
 
@@ -446,7 +446,7 @@ bible.genNames= function() {
 				if (verse1 > bible.Books[bookIndex].verses[chapter1 - 1]) {
 					verse1 = bible.Books[bookIndex].verses[chapter1 - 1];
 				}
-				if (verse2 <= verse1) {
+				if (chapter1 === chapter2 && verse2 <= verse1) {
 					chapter2 = -1;
 					verse2 = -1;
 				}

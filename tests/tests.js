@@ -1,5 +1,20 @@
 /* brackets - xunit: qunit */
 
+/** Parse tests (partial) **/
+// Gen 1-3
+test("parse Genesis 1-3", function() {
+    var resultRef = bible.parseReference('Genesis 1-3');
+    var expectedResults = {bookIndex: 0, chapter: 1, chapter1: 1, chapter2: 3, verse: -1, verse1: -1, verse2: -1};
+    equal(resultRef.bookIndex, expectedResults.bookIndex);
+    equal(resultRef.chapter, expectedResults.chapter);
+    equal(resultRef.chapter1, expectedResults.chapter1);
+    equal(resultRef.chapter2, expectedResults.chapter2);
+    equal(resultRef.verse, expectedResults.verse);
+    equal(resultRef.verse1, expectedResults.verse1);
+    equal(resultRef.verse2, expectedResults.verse2);
+});
+
+
 /** Verse distances */
 // Gen 2 - Gen 4
 test("verse distance same book", function() {
