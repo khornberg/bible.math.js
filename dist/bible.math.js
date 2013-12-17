@@ -635,7 +635,14 @@ for (var i=0; i<args.length; i++) {
         verses = args[0].verse2 + bible.verseDistance(args[0].bookIndex, args[0].chapter1, args[0].chapter2) - args[0].verse1 + 1;
         chapters = args[0].chapter2 - args[0].chapter1;
     }
-    // whole chapter ref passed 
+    // chapter1 and chapter2 are whole chapters 
+    else if (args[0].chapter1 >= 0 && args[0].chapter2 >= 0) {
+        for (var ch = args[0].chapter2 - 1; ch >= 0; ch--) {
+            verses += bible.Books[args[0].bookIndex].verses[ch];
+        }
+        chapters = Math.abs(args[0].chapter2-args[0].chapter1);
+    }
+    // single whole chapter ref passed 
     else if (args[0].chapter1 >= 0 && args[0].chapter2 === -1) {
         verses = bible.Books[args[0].bookIndex].verses[args[0].chapter1];
         chapters = 1;

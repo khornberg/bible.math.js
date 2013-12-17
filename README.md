@@ -52,9 +52,9 @@ For example, if seven verses are subtracted from 2 John 1:7, then a reference to
 `bible.distance(reference1, *reference2) // returns javascript object with chapters and verses`
 
 The bible order of the references does not matter.  
-If more than two references are passed, the first two will be used.  
+If more than two references are passed, only the first two will be used.  
 Only one reference is necessary if chapter2 and verse2 of the object contain values.  
-Passing a reference as a whole book (only bookIndex has a value, all others are -1) returns the chapters and verses of the book.  
+Passing a reference as a whole book (only bookIndex has a value, all others are -1) returns the chapters and verses of that book (see note below).  
 
 Example:
 Calculate distance between Genesis 2:5 and Leviticus 4:5.
@@ -65,10 +65,12 @@ bible.distance(ref1, ref2); // returns {'chapters': 92, 'verses': 2766}
 ```
 
 The distance calculation includes the referenced verses. The distance between Gen 1:1 and Gen 1:3 is three.  
-Why? If one is reading verses Gen 1:1-3, one has read three verses.
+Why? If one is reading verses Gen 1:1-3, one has read three verses.  
+
+The distance between Gen 1 and Gen 3 is `{chapters: 2, verses: 56}`. There are two chapters between Gen 1:1 and Gen 3:1 and 56 verses from Gen 1:1 to Gen 2:25.
 
 *Important*
-* Distance can calculate the distance (chapters and verses) of an entire book, however the reference must be created manually. This is because `parseReference('Gen')` returns the same as `parseReference('Gen 1')`. The reference must set the `chapter` and `chapter1` to `-1`.  
+* The `distance` method can calculate the distance (chapters and verses) of an entire book, however the reference must be created manually. This is because `parseReference('Gen')` returns the same object as `parseReference('Gen 1')`. The reference must set `chapter` and `chapter1` to `-1`.  
 * New objects are not created. The math is performed on the passed object.
 
 ##### bible.Reference object
@@ -85,12 +87,14 @@ verse2: _verse2
 
 ### Testing
 Tests are found in the `tests` directory.  
-Tests can be run either mannually by opening `tests/tests.html` in a browser or via Grunt.
+Tests can be run either mannually by opening `tests/tests.html` in a browser or on the command line via `grunt test`.
 
 ## Change Log
 
 ### 0.1.7
 * Fix book names in bible.js
+* Fix whole chapter references in bible.reference.js
+* Update tests for whole chapter fix
 
 ### 0.1.6
 * Distribute as single file

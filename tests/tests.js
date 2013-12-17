@@ -16,6 +16,7 @@ test("parse Genesis 1-3", function() {
 
 
 /** Verse distances */
+module('verse distance');
 // Gen 2 - Gen 4
 test("verse distance same book", function() {
     var resultDistance = bible.verseDistance(0, 1, 3);
@@ -40,6 +41,7 @@ test("verse distance whole book", function() {
 
 
 /** Distance **/
+module('distance');
 // Gen 1
 test("distance whole chapter gen 1", function() {
     var ref1 = {bookIndex: 0, chapter: 1, verse: -1, chapter1: 1, verse1: -1, chapter2: -1, verse2: -1};
@@ -167,7 +169,16 @@ test("verse distance between whole chapters", function() {
     deepEqual(resultDistance, expectedResults);
 });
 
+// Gen 1 - Gen 3 verses
+test("verse distance between whole chapters in single ref", function() {
+    var ref1 = {bookIndex: 0, chapter: 1, verse: -1, chapter1: 1, verse1: -1, chapter2: 3, verse2: -1};
+    var resultDistance = bible.distance(ref1);
+    var expectedResults = {'chapters': 2, 'verses': 56};
+    deepEqual(resultDistance, expectedResults);
+});
+
 // Edge cases
+module('edge cases');
 
 // Rev 22:1 + 25 = Rev 22:21
 test("add verses past end of bible", function() {
@@ -207,6 +218,8 @@ test("subtract 10 000 verses from beginning of bible", function() {
 
 
 /** Add tests */
+module('add');
+
 // 1 John 5:1 + 5 verses
 test("add 5 verses from begining of book, same book", function() {
     var ref1 = {bookIndex: 61, chapter: 5, verse: 1, chapter1: 5, verse1: 1, chapter2: -1, verse2: -1};
@@ -271,6 +284,8 @@ test("add 10 verses from a chapter reference", function() {
 });
 
 /*Subtract Tests*/
+module('subtract');
+
 // 2 John 7 - 5 verses
 test("subtract 5 verses from middle of book", function() {
     var ref1 = {bookIndex: 62, chapter: 1, verse: 7, chapter1: 1, verse1: 7, chapter2: -1, verse2: -1};
