@@ -42,11 +42,20 @@ test("verse distance whole book", function() {
 
 /** Distance **/
 module('distance');
+
+// whole book Col
+test("verse distance whole book * must use custom reference", function() {
+    var ref1 = {bookIndex: 50, chapter: -1, verse: -1, chapter1: -1, verse1: -1, chapter2: -1, verse2: -1};
+    var resultDistance = bible.distance(ref1);
+    var expectedResults = {'chapters': 4, 'verses': 95};
+    deepEqual(resultDistance, expectedResults);
+});
+
 // Gen 1
 test("distance whole chapter gen 1", function() {
     var ref1 = {bookIndex: 0, chapter: 1, verse: -1, chapter1: 1, verse1: -1, chapter2: -1, verse2: -1};
     var resultDistance = bible.distance(ref1);
-    var expectedResults = {'chapters': 1, 'verses': 31};
+    var expectedResults = {'chapters': 0, 'verses': 31};
 	deepEqual(resultDistance, expectedResults);
 });
 
@@ -54,8 +63,42 @@ test("distance whole chapter gen 1", function() {
 test("distance whole chapter ps 150", function() {
     var ref1 = {bookIndex: 18, chapter: 150, verse: -1, chapter1: 150, verse1: -1, chapter2: -1, verse2: -1};
     var resultDistance = bible.distance(ref1);
-    var expectedResults = {'chapters': 1, 'verses': 6};
+    var expectedResults = {'chapters': 0, 'verses': 6};
 	deepEqual(resultDistance, expectedResults);
+});
+
+// Gen 1:3
+test("distance single chapter and verse", function() {
+    var ref1 = {bookIndex: 0, chapter: 1, verse: 3, chapter1: 1, verse1: 3, chapter2: -1, verse2: -1};
+    var resultDistance = bible.distance(ref1);
+    var expectedResults = {'chapters': 0, 'verses': 1};
+    deepEqual(resultDistance, expectedResults);
+});
+
+// Gen 1 - Gen 2 verses
+// +1 verse because the whole of Gen 1 is counted and the first verse of Gen 2
+test("verse distance between whole chapters", function() {
+    var ref1 = {bookIndex: 0, chapter: 1, verse: -1, chapter1: 1, verse1: -1, chapter2: -1, verse2: -1};
+    var ref2 = {bookIndex: 0, chapter: 2, verse: -1, chapter1: 2, verse1: -1, chapter2: -1, verse2: -1};
+    var resultDistance = bible.distance(ref1, ref2);
+    var expectedResults = {'chapters': 1, 'verses': 32};
+    deepEqual(resultDistance, expectedResults);
+});
+
+// Gen 1 - Gen 3 verses
+test("verse distance between whole chapters in single ref", function() {
+    var ref1 = {bookIndex: 0, chapter: 1, verse: -1, chapter1: 1, verse1: -1, chapter2: 3, verse2: -1};
+    var resultDistance = bible.distance(ref1);
+    var expectedResults = {'chapters': 2, 'verses': 80};
+    deepEqual(resultDistance, expectedResults);
+});
+
+// Gen 4 - Gen 6 verses
+test("verse distance between whole chapters in single ref", function() {
+    var ref1 = {bookIndex: 0, chapter: 1, verse: -1, chapter1: 1, verse1: -1, chapter2: 3, verse2: -1};
+    var resultDistance = bible.distance(ref1);
+    var expectedResults = {'chapters': 2, 'verses': 80};
+    deepEqual(resultDistance, expectedResults);
 });
 
 // Gen 2:5 - Lev 4:5
@@ -74,37 +117,6 @@ test("distance same book", function() {
     var resultDistance = bible.distance(ref1, ref2);
     var expectedResults = {'chapters': 0, 'verses': 3};
 	deepEqual(resultDistance, expectedResults);
-});
-
-// Gen 1:2 - Gen 1:3
-test("distance same book obj by ref?", function() {
-    var ref1 = {bookIndex: 0, chapter: 1, verse: 1, chapter1: 1, verse1: 1, chapter2: -1, verse2: -1};
-    var ref2 = {bookIndex: 0, chapter: 1, verse: 3, chapter1: 1, verse1: 3, chapter2: -1, verse2: -1};
-//    console.info("before: " + JSON.stringify(ref1));
-    ref1 = bible.add(ref1, 4);
-    ref1 = bible.subtract(ref1, 3);
-//    console.info("after: " + JSON.stringify(ref1));
-    var resultDistance = bible.distance(ref1, ref2);
-//    console.info(JSON.stringify(ref1) + JSON.stringify(ref2));
-    var expectedResults = {'chapters': 0, 'verses': 2};
-	deepEqual(resultDistance, expectedResults);
-});
-
-// pass objects by ref?
-test("distance obj by ref1", function() {
-    var ref1 = {bookIndex: 0, chapter: 1, verse: 1, chapter1: 1, verse1: 1, chapter2: -1, verse2: -1};
-    var ref2 = {bookIndex: 0, chapter: 1, verse: 3, chapter1: 1, verse1: 3, chapter2: -1, verse2: -1};
-    var resultDistance = bible.distance(ref1, ref2);
-//    console.info(JSON.stringify(ref1) + JSON.stringify(ref2));
-	deepEqual(ref1, {bookIndex: 0, chapter: 1, verse: 1, chapter1: 1, verse1: 1, chapter2: -1, verse2: -1});
-});
-
-test("distance obj by ref2", function() {
-    var ref1 = {bookIndex: 0, chapter: 1, verse: 1, chapter1: 1, verse1: 1, chapter2: -1, verse2: -1};
-    var ref2 = {bookIndex: 0, chapter: 1, verse: 3, chapter1: 1, verse1: 3, chapter2: -1, verse2: -1};
-    var resultDistance = bible.distance(ref1, ref2);
-//    console.info(JSON.stringify(ref1) + JSON.stringify(ref2));
-	deepEqual(ref2, {bookIndex: 0, chapter: 1, verse: 3, chapter1: 1, verse1: 3, chapter2: -1, verse2: -1});
 });
 
 // Gen 1:1 - Gen 1:3
@@ -143,12 +155,35 @@ test("verse distance same book chapter to chapter", function() {
     deepEqual(resultDistance, expectedResults);
 });
 
-// Col
-test("verse distance whole book * must use custom reference", function() {
-    var ref1 = {bookIndex: 50, chapter: -1, verse: -1, chapter1: -1, verse1: -1, chapter2: -1, verse2: -1};
-    var resultDistance = bible.distance(ref1);
-    var expectedResults = {'chapters': 4, 'verses': 95};
-    deepEqual(resultDistance, expectedResults);
+// Gen 1:2 - Gen 1:3
+test("distance same book obj by ref?", function() {
+    var ref1 = {bookIndex: 0, chapter: 1, verse: 1, chapter1: 1, verse1: 1, chapter2: -1, verse2: -1};
+    var ref2 = {bookIndex: 0, chapter: 1, verse: 3, chapter1: 1, verse1: 3, chapter2: -1, verse2: -1};
+//    console.info("before: " + JSON.stringify(ref1));
+    ref1 = bible.add(ref1, 4);
+    ref1 = bible.subtract(ref1, 3);
+//    console.info("after: " + JSON.stringify(ref1));
+    var resultDistance = bible.distance(ref1, ref2);
+//    console.info(JSON.stringify(ref1) + JSON.stringify(ref2));
+    var expectedResults = {'chapters': 0, 'verses': 2};
+	deepEqual(resultDistance, expectedResults);
+});
+
+// pass objects by ref?
+test("distance obj by ref1", function() {
+    var ref1 = {bookIndex: 0, chapter: 1, verse: 1, chapter1: 1, verse1: 1, chapter2: -1, verse2: -1};
+    var ref2 = {bookIndex: 0, chapter: 1, verse: 3, chapter1: 1, verse1: 3, chapter2: -1, verse2: -1};
+    var resultDistance = bible.distance(ref1, ref2);
+//    console.info(JSON.stringify(ref1) + JSON.stringify(ref2));
+	deepEqual(ref1, {bookIndex: 0, chapter: 1, verse: 1, chapter1: 1, verse1: 1, chapter2: -1, verse2: -1});
+});
+
+test("distance obj by ref2", function() {
+    var ref1 = {bookIndex: 0, chapter: 1, verse: 1, chapter1: 1, verse1: 1, chapter2: -1, verse2: -1};
+    var ref2 = {bookIndex: 0, chapter: 1, verse: 3, chapter1: 1, verse1: 3, chapter2: -1, verse2: -1};
+    var resultDistance = bible.distance(ref1, ref2);
+//    console.info(JSON.stringify(ref1) + JSON.stringify(ref2));
+	deepEqual(ref2, {bookIndex: 0, chapter: 1, verse: 3, chapter1: 1, verse1: 3, chapter2: -1, verse2: -1});
 });
 
 // Errored reference
@@ -156,24 +191,6 @@ test("verse distance whole book error all -1", function() {
     var ref1 = {bookIndex: -1, chapter: -1, verse: -1, chapter1: -1, verse1: -1, chapter2: -1, verse2: -1};
     var resultDistance = bible.distance(ref1);
     var expectedResults = {'chapters': null, 'verses': null};
-    deepEqual(resultDistance, expectedResults);
-});
-
-// Gen 1 - Gen 2 verses
-// +1 verse because the whole of Gen 1 is counted and the first verse of Gen 2
-test("verse distance between whole chapters", function() {
-    var ref1 = {bookIndex: 0, chapter: 1, verse: -1, chapter1: 1, verse1: -1, chapter2: -1, verse2: -1};
-    var ref2 = {bookIndex: 0, chapter: 2, verse: -1, chapter1: 2, verse1: -1, chapter2: -1, verse2: -1};
-    var resultDistance = bible.distance(ref1, ref2);
-    var expectedResults = {'chapters': 1, 'verses': 32};
-    deepEqual(resultDistance, expectedResults);
-});
-
-// Gen 1 - Gen 3 verses
-test("verse distance between whole chapters in single ref", function() {
-    var ref1 = {bookIndex: 0, chapter: 1, verse: -1, chapter1: 1, verse1: -1, chapter2: 3, verse2: -1};
-    var resultDistance = bible.distance(ref1);
-    var expectedResults = {'chapters': 2, 'verses': 80};
     deepEqual(resultDistance, expectedResults);
 });
 

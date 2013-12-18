@@ -582,7 +582,7 @@ bible.Reference = function () {
  * @depends on bible.js and bible.reference.js from bib.ly by John Dyer which are copyrighted by him and licensed under CC BY 3.0
  *
  * @author khornberg
- * @version 0.1.7
+ * @version 0.1.8
  * 
  * @param {object} A bible.Reference object. Expects one or two references, any more will be ignored.
  *
@@ -630,30 +630,41 @@ for (var i=0; i<args.length; i++) {
 
  //1 argument
  if (args.length == 1) {
-    //chapter2 and verse2 are set, calculate distance between chapter1, verse1 and chapter2, verse2
-    if (args[0].chapter2 !== -1 && args[0].verse2 !== -1) {
-        verses = args[0].verse2 + bible.verseDistance(args[0].bookIndex, args[0].chapter1, args[0].chapter2) - args[0].verse1 + 1;
-        chapters = args[0].chapter2 - args[0].chapter1;
-    }
-    // chapter1 and chapter2 are whole chapters 
-    else if (args[0].chapter1 >= 0 && args[0].chapter2 >= 0 && args[0].verse1 === -1 && args[0].verse2 === -1) {
-        for (var ch = args[0].chapter2; ch >= 0; ch--) {
-            verses += bible.Books[args[0].bookIndex].verses[ch];
-        }
-        chapters = Math.abs(args[0].chapter2-args[0].chapter1);
-    }
-    // single whole chapter ref passed 
-    else if (args[0].chapter1 >= 0 && args[0].chapter2 === -1) {
-        verses = bible.Books[args[0].bookIndex].verses[args[0].chapter1];
-        chapters = 1;
-    }
-    // whole book ref passed 
-    else if (args[0].chapter1 === -1 && args[0].chapter2 === -1) {
+    // whole book ref passed
+    if (args[0].chapter1 === -1 && args[0].chapter2 === -1) {
         verses = bible.Books[args[0].bookIndex].verses.reduce(function(a, b){
             return a + b;
         }, 0);
         chapters = bible.Books[args[0].bookIndex].verses.length;
     }
+
+    // single whole chapter ref passed
+    else if (args[0].chapter1 >= 0 && args[0].chapter2 === -1 && args[0].verse1 === -1 && args[0].verse2 === -1) {
+        verses = bible.Books[args[0].bookIndex].verses[args[0].chapter1];
+        chapters = 0;
+    }
+
+    // single chapter and verse
+    else if (args[0].chapter1 >= 0 && args[0].chapter2 === -1 && args[0].verse1 >= 0 && args[0].verse2 === -1) {
+        verses = 1;
+        chapters = 0;
+    }
+
+    // chapter1 and chapter2 are whole chapters 
+    else if (args[0].chapter1 >= 0 && args[0].chapter2 >= 0 && args[0].verse1 === -1 && args[0].verse2 === -1) {
+        for (var ch = args[0].chapter2; ch >= args[0].chapter1; ch--) {
+            verses += bible.Books[args[0].bookIndex].verses[ch];
+        }
+        chapters = Math.abs(args[0].chapter2-args[0].chapter1);
+    }
+
+    // distance between chapter1, verse1 and chapter2, verse2
+    if (args[0].chapter1 !== -1 && args[0].verse1 !== -1 && args[0].chapter2 !== -1 && args[0].verse2 !== -1) {
+        verses = args[0].verse2 + bible.verseDistance(args[0].bookIndex, args[0].chapter1, args[0].chapter2) - args[0].verse1 + 1;
+        chapters = args[0].chapter2 - args[0].chapter1;
+    }
+
+
     //chapter2 and verse2 are not set, expects a second argument
     //neither distance can be calculated, returning null
     else {   
@@ -732,9 +743,6 @@ bible.add = function (reference, verses) {
     
     // account for single chapter references
     reference.verse1 = (reference.verse1 === -1 && reference.chapter1 >= 0) ? 1 : reference.verse1;
-
-    // account for multiple single chapter references
-    reference.verse2 = (reference.verse2 === -1 && reference.chapter2 >= 0) ? bible.Books[reference.bookIndex].verses[reference.chapter2] : reference.verse2;
     
     while (verses !== 0) {
         var chapterVerses = bible.Books[reference.bookIndex].verses[reference.chapter1];
