@@ -1,6 +1,6 @@
 {
   "name": "bible.math",
-  "version": "0.1.7",
+  "version": "0.1.9",
   "description": "Parses bible references and can do math on them. A math extention to John Dyer's bib.ly.",
   "main": "/dist/bible.math.min.js",
   "directories": {
@@ -14,7 +14,9 @@
     "grunt-contrib-watch": "~0.5.3",
     "grunt-contrib-qunit": "~0.3.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "grunt-blanket": "0.0.8"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -32,11 +34,11 @@
   "author": "Kyle Hornberg",
   "licenses": [
     {
-     "type": "Creative Commons by 3.0",
-     "url": "http://creativecommons.org/licenses/by/3.0/"
+      "type": "Creative Commons by 3.0",
+      "url": "http://creativecommons.org/licenses/by/3.0/"
     },
     {
-     "type": "Apache v2"
+      "type": "Apache v2"
     }
   ],
   "bugs": {

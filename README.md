@@ -12,7 +12,7 @@ You can, however, manually create a reference object as defined below and use it
 
 ```
 var ref = bible.parseReference('Romans 1:2');
-bible.add(ref, 10); // changes reference object to Romans 1:12
+ref.add(10); // changes reference object to Romans 1:12
 ref.toString(); // Romans 1:12 
 ```
 
@@ -28,7 +28,7 @@ Example:
 Add 10 verses to 1 John 5:20
 ```    
 var ref1 = {bookIndex: 61, chapter: 5, verse: 20, chapter1: 5, verse1: 20, chapter2: -1, verse2: -1};
-bible.add(ref1, 10);
+ref1.add(10);
 ref1.toString(); // returns "2 John 1:9"
 ```
 Keys chapter and verse of the returned object remain unchanged. Chapter1 and verse1 are the correct chapter and verse.  
@@ -40,7 +40,7 @@ Exmple:
 Subtract 10 verses from 2 John 7
 ```
 var ref1 = {bookIndex: 62, chapter: 1, verse: 7, chapter1: 1, verse1: 7, chapter2: -1, verse2: -1};
-var result = bible.subtract(ref1, 10);
+var result = ref1.subtract(10);
 ref.toString(); // returns "1 John 5:19"
 ```
 Keys chapter and verse of the returned object remain unchanged. Chapter1 and verse1 are the correct chapter and verse.  
@@ -86,6 +86,9 @@ Tests are found in the `tests` directory.
 Tests can be run either mannually by opening `tests/tests.html` in a browser or on the command line via `grunt test`.
 
 ## Change Log
+
+### 0.1.9
+* Add `add()` and `subtract()` functions to reference.
 
 ### 0.1.8
 * Fix single chapter and verse distance calculations
