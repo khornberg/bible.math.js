@@ -251,6 +251,14 @@ bible.Reference = function () {
 				return '?';
 		},
 
+        add: function(verses) {
+            bible.add.call(null, this, verses);
+        },
+
+        subtract: function(verses) {
+            bible.subtract.call(null, this, verses);
+        },
+
 		toString: function () {
 			if (this.bookIndex < 0 || this.bookIndex >= bible.Books.length) return "invalid";
 

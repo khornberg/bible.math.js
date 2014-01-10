@@ -3,8 +3,8 @@
  * @depends on bible.js and bible.reference.js from bib.ly by John Dyer which are copyrighted by him and licensed under CC BY 3.0
  *
  * @author khornberg
- * @version 0.1.8
- * 
+ * @version 0.1.9
+ *
  * @param {object} A bible.Reference object. Expects one or two references, any more will be ignored.
  *
  * Expects a bible.Reference object
@@ -17,7 +17,7 @@
  *      verse2: _verse2
  *
  *  bookIndex is a 0 based array
- *  chapters are expected as a 1 based array (how you see it in the bible) 
+ *  chapters are expected as a 1 based array (how you see it in the bible)
  *  and are normalized to a 0 based array
  */
 
@@ -28,10 +28,10 @@ bible.distance = function () {
  var verses = null;
  var startRef = null;
  var endRef = null;
-    
+
  // Reference book check
  if (args[0].bookIndex < 0 || args[0].bookIndex > 65) return {'chapters': null, 'verses': null};
- 
+
  // Sort references based on book order
  if (args.length > 1) {
     if (args[0].bookIndex <= args[1].bookIndex) {
@@ -43,9 +43,9 @@ bible.distance = function () {
         endRef = args[0];
     }
  }
-    
+
 // Normalize chapters to 0 based arrays
-for (var i=0; i<args.length; i++) { 
+for (var i=0; i<args.length; i++) {
     bible.denormalize(args[i]);
 }
 
@@ -71,7 +71,7 @@ for (var i=0; i<args.length; i++) {
         chapters = 0;
     }
 
-    // chapter1 and chapter2 are whole chapters 
+    // chapter1 and chapter2 are whole chapters
     else if (args[0].chapter1 >= 0 && args[0].chapter2 >= 0 && args[0].verse1 === -1 && args[0].verse2 === -1) {
         for (var ch = args[0].chapter2; ch >= args[0].chapter1; ch--) {
             verses += bible.Books[args[0].bookIndex].verses[ch];
@@ -88,11 +88,11 @@ for (var i=0; i<args.length; i++) {
 
     //chapter2 and verse2 are not set, expects a second argument
     //neither distance can be calculated, returning null
-    else {   
+    else {
         bible.normalize(args[0]);
         return {'chapters': chapters, 'verses': verses};
     }
-     
+
     bible.normalize(args[0]);
  }
  //2 arguments, any more are ignored
@@ -106,19 +106,19 @@ for (var i=0; i<args.length; i++) {
         var chaptersBegin = 0;
         var chaptersMiddle = 0;
         var chaptersEnd = 0;
-        
+
         startBook = bible.Books[startRef.bookIndex].verses.length;
         versesBegin = bible.verseDistance(startRef.bookIndex, startRef.chapter1, startBook) - startRef.verse1 + 1;
         chaptersBegin = startBook - startRef.chapter1;
         versesEnd = bible.verseDistance(endRef.bookIndex, 0, endRef.chapter1) + endRef.verse;
         chaptersEnd = endRef.chapter1;
-        
+
         //whole book distances
         for(b=startRef.bookIndex+1; b<endRef.bookIndex; b++) {
             versesMiddle = bible.verseDistance(b, 0, bible.Books[b].verses.length) + versesMiddle;
             chaptersMiddle += bible.Books[b].verses.length;
         }
-        
+
         verses = versesBegin + versesMiddle + versesEnd;
         chapters = chaptersBegin + chaptersMiddle + chaptersEnd;
     }
@@ -135,36 +135,36 @@ for (var i=0; i<args.length; i++) {
  return {'chapters': chapters, 'verses': verses};
 };
 
-/** 
+/**
 * Calculate distance between two chapters of a book
-* @param {int} bookIndex Book in bible.js 
-* @param {int} chapter1 Index of chapter 
-* @param {int} chapter2 Index of chapter 
+* @param {int} bookIndex Book in bible.js
+* @param {int} chapter1 Index of chapter
+* @param {int} chapter2 Index of chapter
 */
 bible.verseDistance = function(bookIndex, chapter1, chapter2) {
     var chapters = bible.Books[bookIndex].verses;
     var verses = 0;
     //single chapter
     if(chapter1==chapter2) return 0;
-    
+
     for(i=chapter1; i<chapter2; i++) {
         verses = chapters[i] + verses;
     }
-    
+
     return verses;
 };
 
-/** 
-* Add verses to a bible reference 
-* @param {object} reference A bible.Reference object 
-* @param {int} verses Number of verses to add 
+/**
+* Add verses to a bible reference
+* @param {object} reference A bible.Reference object
+* @param {int} verses Number of verses to add
 */
 bible.add = function (reference, verses) {
     bible.denormalize(reference);
-    
+
     // account for single chapter references
     reference.verse1 = (reference.verse1 === -1 && reference.chapter1 >= 0) ? 1 : reference.verse1;
-    
+
     while (verses !== 0) {
         var chapterVerses = bible.Books[reference.bookIndex].verses[reference.chapter1];
 
@@ -187,7 +187,7 @@ bible.add = function (reference, verses) {
                 } else {
                     reference.bookIndex++;
                     reference.chapter1 = 0;
-                }    
+                }
             } else {
                 reference.chapter1++;
             }
@@ -195,21 +195,21 @@ bible.add = function (reference, verses) {
     }
 
     bible.normalize(reference);
-    
+
     return reference;
 };
 
-/** 
-* Subtract verses from a bible reference 
-* @param {object} reference A bible.Reference object 
-* @param {int} verses Number of verses to subtract 
+/**
+* Subtract verses from a bible reference
+* @param {object} reference A bible.Reference object
+* @param {int} verses Number of verses to subtract
 */
 bible.subtract = function (reference, verses) {
     bible.denormalize(reference);
-    
+
     // account for single chapter references
     reference.verse1 = (reference.verse1 === -1 && reference.chapter1 >= 0) ? 1 : reference.verse1;
-    
+
     while (verses !== 0) {
         if (reference.verse1 - verses > 0) {
             reference.verse1 = reference.verse1 - verses;
@@ -242,9 +242,9 @@ bible.subtract = function (reference, verses) {
             }
         }
     }
-    
+
     bible.normalize(reference);
-    
+
     return reference;
 };
 
