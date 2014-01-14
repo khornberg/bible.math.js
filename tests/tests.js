@@ -189,9 +189,8 @@ test("distance obj by ref2", function() {
 // Errored reference
 test("verse distance whole book error all -1", function() {
     var ref1 = {bookIndex: -1, chapter: -1, verse: -1, chapter1: -1, verse1: -1, chapter2: -1, verse2: -1};
-    var resultDistance = bible.distance(ref1);
-    var expectedResults = {'chapters': null, 'verses': null};
-    deepEqual(resultDistance, expectedResults);
+    throws( function() { bible.distance(ref1); }, /invalid/, "Invalid reference");
+
 });
 
 // Edge cases
@@ -256,6 +255,21 @@ test("add 10 verses from middle of book, change 1 book", function() {
 });
 
 // Gen 3:5 + 100 verses
+test("natural add 100 verses from middle of book, change several chapters", function() {
+    var ref1 = bible.parseReference('Genesis 3:5');
+    var n = 100;
+    var result = ref1.add(n);
+    var expectedResults = {bookIndex: 0, chapter: 3, verse: 5, chapter1: 7, verse1: 1, chapter2: -1, verse2: -1};
+    equal(ref1.bookIndex, expectedResults.bookIndex);
+    equal(ref1.chapter, expectedResults.chapter);
+    equal(ref1.chapter1, expectedResults.chapter1);
+    equal(ref1.chapter2, expectedResults.chapter2);
+    equal(ref1.verse, expectedResults.verse);
+    equal(ref1.verse1, expectedResults.verse1);
+    equal(ref1.verse2, expectedResults.verse2);
+});
+
+// Gen 3:5 + 100 verses
 test("add 100 verses from middle of book, change several chapters", function() {
     var ref1 = {bookIndex: 0, chapter: 3, verse: 5, chapter1: 3, verse1: 5, chapter2: -1, verse2: -1};
     var n = 100;
@@ -300,6 +314,13 @@ test("add 10 verses from a chapter reference", function() {
     deepEqual(result, expectedResults);
 });
 
+// Pass verses which is not a number
+test("add verses passed not a number", function() {
+    var ref1 = bible.parseReference('Genesis 4:20');
+    var n = "50";
+    throws( function() { ref1.add(n); }, /verses not a number/, "Not a number");
+});
+
 /*Subtract Tests*/
 module('subtract');
 
@@ -330,6 +351,21 @@ test("subtract 50 verses from middle of book", function() {
     deepEqual(result, expectedResults);
 });
 
+// Gen 4:20 - 50 verses
+test("natural subtract 50 verses from middle of book", function() {
+    var ref1 = bible.parseReference('Genesis 4:20');
+    var n = 50;
+    var result = ref1.subtract(n);
+    var expectedResults = {bookIndex: 0, chapter: 4, verse: 20, chapter1: 2, verse1: 19, chapter2: -1, verse2: -1};
+    equal(ref1.bookIndex, expectedResults.bookIndex);
+    equal(ref1.chapter, expectedResults.chapter);
+    equal(ref1.chapter1, expectedResults.chapter1);
+    equal(ref1.chapter2, expectedResults.chapter2);
+    equal(ref1.verse, expectedResults.verse);
+    equal(ref1.verse1, expectedResults.verse1);
+    equal(ref1.verse2, expectedResults.verse2);
+});
+
 // 2 John 7 - 7 verses
 test("subtract 7 verses resulting in 0 verses from middle of book", function() {
     var ref1 = {bookIndex: 62, chapter: 1, verse: 7, chapter1: 1, verse1: 7, chapter2: -1, verse2: -1};
@@ -346,6 +382,14 @@ test("subtract 10 verses from a chapter reference", function() {
     var result = bible.subtract(ref1, n);
     var expectedResults = {bookIndex: 0, chapter: 2, verse: -1, chapter1: 1, verse1: 22, chapter2: -1, verse2: -1};
     deepEqual(result, expectedResults);
+});
+
+// Pass verses which is not a number
+test("subtract verses passed not a number", function() {
+    var ref1 = bible.parseReference('Genesis 4:20');
+    var n = "50";
+    throws( function() { ref1.subtract(n); }, /verses not a number/, "Not a number");
+
 });
 
 /*Verse difference tests equal add and subtract tests*/

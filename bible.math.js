@@ -29,6 +29,16 @@ bible.distance = function () {
  var startRef = null;
  var endRef = null;
 
+ // Valid references?
+ if (!bible.isValidReference(args[0])) {
+     throw "(bible.math.distance) reference1 invalid";
+ }
+ if (typeof args[1] !== 'undefined') {
+    if (!bible.isValidReference(args[1])) {
+        throw "(bible.math.distance) reference2 invalid";
+    }
+ }
+
  // Reference book check
  if (args[0].bookIndex < 0 || args[0].bookIndex > 65) return {'chapters': null, 'verses': null};
 
@@ -160,6 +170,15 @@ bible.verseDistance = function(bookIndex, chapter1, chapter2) {
 * @param {int} verses Number of verses to add
 */
 bible.add = function (reference, verses) {
+    // validate
+    if (!bible.isNumber(verses)) {
+        throw "(bible.math.add) verses not a number";
+    }
+
+    if (!bible.isValidReference(reference)) {
+        throw "(bible.math.add) reference invalid";
+    }
+
     bible.denormalize(reference);
 
     // account for single chapter references
@@ -205,6 +224,15 @@ bible.add = function (reference, verses) {
 * @param {int} verses Number of verses to subtract
 */
 bible.subtract = function (reference, verses) {
+    // validate
+    if (!bible.isNumber(verses)) {
+        throw "(bible.math.subtract) verses not a number";
+    }
+
+    if (!bible.isValidReference(reference)) {
+        throw "(bible.math.subtract) reference invalid";
+    }
+
     bible.denormalize(reference);
 
     // account for single chapter references
@@ -267,5 +295,23 @@ bible.normalize = function (reference) {
     reference.chapter1 = (reference.chapter1 >= 0) ? reference.chapter1 + 1 : reference.chapter1;
     reference.chapter2 = (reference.chapter2 >= 0) ? reference.chapter2 + 1 : reference.chapter2;
 };
+
+/**
+* Checks if varible is a number
+* @param {number} number of verses to add or subtract
+* Entirely taken from underscore.js
+*/
+bible.isNumber = function (verses) {
+    return toString.call(verses) == '[object Number]';
+}
+
+/**
+* Most minimal check for valid reference object
+* @param {object} reference
+* Entirely taken from bible.reference.js
+*/
+bible.isValidReference = function (reference) {
+    return (reference.bookIndex > -1 && reference.bookIndex < bible.Books.length && (reference.chapter1 > 0 || (reference.chapter === -1 && reference.chapter1 === -1)));
+}
 
 //sdg

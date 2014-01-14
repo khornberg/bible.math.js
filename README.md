@@ -87,6 +87,9 @@ Tests can be run either mannually by opening `tests/tests.html` in a browser or 
 
 ## Change Log
 
+### 0.2.0
+* Add type checking and validation of inputs
+
 ### 0.1.9
 * Add `add()` and `subtract()` functions to reference.
 
