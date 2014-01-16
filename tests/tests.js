@@ -190,7 +190,13 @@ test("distance obj by ref2", function() {
 test("verse distance whole book error all -1", function() {
     var ref1 = {bookIndex: -1, chapter: -1, verse: -1, chapter1: -1, verse1: -1, chapter2: -1, verse2: -1};
     throws( function() { bible.distance(ref1); }, /invalid/, "Invalid reference");
+});
 
+// Errored reference
+test("verse distance whole book error all -1", function() {
+    var ref1 = {bookIndex: 0, chapter: 1, verse: 1, chapter1: 1, verse1: 1, chapter2: -1, verse2: -1};
+    var ref2 = {bookIndex: -1, chapter: -1, verse: -1, chapter1: -1, verse1: -1, chapter2: -1, verse2: -1};
+    throws( function() { bible.distance(ref1, ref2); }, /invalid/, "Invalid reference");
 });
 
 // Edge cases
@@ -321,6 +327,13 @@ test("add verses passed not a number", function() {
     throws( function() { ref1.add(n); }, /verses not a number/, "Not a number");
 });
 
+// Invalid ref
+test("add verses passed invalid reference", function() {
+    var ref1 = bible.parseReference('Genesis2 5:20');
+    var n = 50;
+    throws( function() { ref1.add(n); }, /invalid/, "Reference invalid");
+});
+
 /*Subtract Tests*/
 module('subtract');
 
@@ -389,7 +402,13 @@ test("subtract verses passed not a number", function() {
     var ref1 = bible.parseReference('Genesis 4:20');
     var n = "50";
     throws( function() { ref1.subtract(n); }, /verses not a number/, "Not a number");
+});
 
+// Invalid ref
+test("subtract verses passed invalid reference", function() {
+    var ref1 = bible.parseReference('Genesis 0:20');
+    var n = 50;
+    throws( function() { ref1.subtract(n); }, /invalid/, "Reference invalid");
 });
 
 /*Verse difference tests equal add and subtract tests*/

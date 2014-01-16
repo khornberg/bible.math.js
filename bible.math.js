@@ -3,7 +3,7 @@
  * @depends on bible.js and bible.reference.js from bib.ly by John Dyer which are copyrighted by him and licensed under CC BY 3.0
  *
  * @author khornberg
- * @version 0.1.9
+ * @version 0.2.1
  *
  * @param {object} A bible.Reference object. Expects one or two references, any more will be ignored.
  *
@@ -303,7 +303,7 @@ bible.normalize = function (reference) {
 */
 bible.isNumber = function (verses) {
     return toString.call(verses) == '[object Number]';
-}
+};
 
 /**
 * Most minimal check for valid reference object
@@ -312,6 +312,6 @@ bible.isNumber = function (verses) {
 */
 bible.isValidReference = function (reference) {
     return (reference.bookIndex > -1 && reference.bookIndex < bible.Books.length && (reference.chapter1 > 0 || (reference.chapter === -1 && reference.chapter1 === -1)));
-}
+};
 
 //sdg
