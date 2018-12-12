@@ -3,6 +3,58 @@ import books from './books';
 class Bible {
   constructor() {
     this.books = books;
+    var _bookIndex = -1,
+      _chapter1 = -1,
+      _verse1 = -1,
+      _chapter2 = -1,
+      _verse2 = -1,
+      args = arguments;
+
+    if (args.length === 0) {
+      // error
+    } else if (args.length == 1 && typeof args[0] == 'string') {
+      // a string that needs to be parsed
+      return this.parseReference(args[0]);
+    } else if (args.length == 1) {
+      // unknown
+      return null;
+    } else {
+      _bookIndex = args[0];
+      _chapter1 = args[1];
+      if (args.length >= 3) _verse1 = args[2];
+      if (args.length >= 4) _chapter2 = args[3];
+      if (args.length >= 5) _verse2 = args[4];
+    }
+    this.bookIndex = _bookIndex;
+    this.chapter = _chapter1;
+    this.verse = _verse1;
+    this.chapter1 = _chapter1;
+    this.verse1 = _verse1;
+    this.chapter2 = _chapter2;
+    this.verse2 = _verse2;
+  }
+
+  get_reference() {
+    return {
+      bookIndex: this.bookIndex,
+      chapter: this.chapter,
+      verse: this.verse,
+      chapter1: this.chapter1,
+      verse1: this.verse1,
+      chapter2: this.chapter2,
+      verse2: this.verse2
+    };
+  }
+
+  set_reference(reference) {
+    this.bookIndex = reference.bookIndex;
+    this.chapter = reference.chapter;
+    this.verse = reference.verse;
+    this.chapter1 = reference.chapter1;
+    this.verse1 = reference.verse1;
+    this.chapter2 = reference.chapter2;
+    this.verse2 = reference.verse2;
+    return this.get_reference();
   }
 
   parseReference(textReference) {
@@ -147,7 +199,7 @@ class Bible {
       }
     }
     // finalize
-    return this.reference(bookIndex, chapter1, verse1, chapter2, verse2);
+    return new Bible(bookIndex, chapter1, verse1, chapter2, verse2);
   }
 
   replaceRoman(str) {
@@ -201,85 +253,60 @@ class Bible {
     }
   }
 
-  reference() {
-    var _bookIndex = -1,
-      _chapter1 = -1,
-      _verse1 = -1,
-      _chapter2 = -1,
-      _verse2 = -1,
-      args = arguments;
-
-    if (args.length === 0) {
-      // error
-    } else if (args.length == 1 && typeof args[0] == 'string') {
-      // a string that needs to be parsed
-      return this.parseReference(args[0]);
-    } else if (args.length == 1) {
-      // unknown
-      return null;
-    } else {
-      _bookIndex = args[0];
-      _chapter1 = args[1];
-      if (args.length >= 3) _verse1 = args[2];
-      if (args.length >= 4) _chapter2 = args[3];
-      if (args.length >= 5) _verse2 = args[4];
-    }
-
-    return {
-      bookIndex: _bookIndex,
-      chapter: _chapter1,
-      verse: _verse1,
-      chapter1: _chapter1,
-      verse1: _verse1,
-      chapter2: _chapter2,
-      verse2: _verse2,
-
-      isValid: function() {
-        return _bookIndex > -1 && _bookIndex < this.books.length && _chapter1 > 0;
-      },
-
-      chapterAndVerse: function(cvSeparator, vvSeparator, ccSeparator) {
-        cvSeparator = cvSeparator || ':';
-        vvSeparator = vvSeparator || '-';
-        ccSeparator = ccSeparator || '-';
-
-        var chapter1 = this.chapter1,
-          chapter2 = this.chapter2,
-          verse1 = this.verse1,
-          verse2 = this.verse2;
-
-        if (chapter1 > 0 && verse1 <= 0 && chapter2 <= 0 && verse2 <= 0)
-          // John 1
-          return chapter1;
-        else if (chapter1 > 0 && verse1 > 0 && chapter2 <= 0 && verse2 <= 0)
-          // John 1:1
-          return chapter1 + cvSeparator + verse1;
-        else if (chapter1 > 0 && verse1 > 0 && chapter2 <= 0 && verse2 > 0)
-          // John 1:1-5
-          return chapter1 + cvSeparator + verse1 + vvSeparator + verse2;
-        else if (chapter1 > 0 && verse1 <= 0 && chapter2 > 0 && verse2 <= 0)
-          // John 1-2
-          return chapter1 + ccSeparator + chapter2;
-        else if (chapter1 > 0 && verse1 > 0 && chapter2 > 0 && verse2 > 0)
-          // John 1:1-2:2
-          return (
-            chapter1 +
-            cvSeparator +
-            verse1 +
-            ccSeparator +
-            (chapter1 != chapter2 ? chapter2 + cvSeparator : '') +
-            verse2
-          );
-        else return '?';
-      }
-    };
+  isValid() {
+    return this.bookIndex > -1 && this.bookIndex < this.books.length && this.chapter1 > 0;
   }
+
+  chapterAndVerse(cvSeparator, vvSeparator, ccSeparator) {
+    cvSeparator = cvSeparator || ':';
+    vvSeparator = vvSeparator || '-';
+    ccSeparator = ccSeparator || '-';
+
+    var chapter1 = this.chapter1,
+      chapter2 = this.chapter2,
+      verse1 = this.verse1,
+      verse2 = this.verse2;
+
+    if (chapter1 > 0 && verse1 <= 0 && chapter2 <= 0 && verse2 <= 0)
+      // John 1
+      return chapter1;
+    else if (chapter1 > 0 && verse1 > 0 && chapter2 <= 0 && verse2 <= 0)
+      // John 1:1
+      return chapter1 + cvSeparator + verse1;
+    else if (chapter1 > 0 && verse1 > 0 && chapter2 <= 0 && verse2 > 0)
+      // John 1:1-5
+      return chapter1 + cvSeparator + verse1 + vvSeparator + verse2;
+    else if (chapter1 > 0 && verse1 <= 0 && chapter2 > 0 && verse2 <= 0)
+      // John 1-2
+      return chapter1 + ccSeparator + chapter2;
+    else if (chapter1 > 0 && verse1 > 0 && chapter2 > 0 && verse2 > 0)
+      // John 1:1-2:2
+      return (
+        chapter1 + cvSeparator + verse1 + ccSeparator + (chapter1 != chapter2 ? chapter2 + cvSeparator : '') + verse2
+      );
+    else return '?';
+  }
+
+  toString() {
+    if (this.bookIndex < 0 || this.bookIndex >= this.books.length) return 'invalid';
+
+    return this.books[this.bookIndex].names[0] + ' ' + this.chapterAndVerse();
+  }
+
+  toShortUrl() {
+    if (this.bookIndex < 0 || this.bookIndex >= this.books.length) return 'invalid';
+    return 'http://bib.ly/' + this.books[this.bookIndex].names[1] + this.chapterAndVerse('.', '-', '-');
+  }
+
   /**
    * Add verses to a bible reference
    * @param {object} reference A bible.Reference object
    * @param {int} verses Number of verses to add
    */
-  add(reference, verses) {
+  add() {
+    let args = arguments;
+    let verses = args.length === 1 ? args[0] : args[1];
+    let reference = args.length === 1 ? this.get_reference() : args[0];
     // validate
     if (!this.isNumber(verses)) {
       throw '(bible.math.add) verses not a number';
@@ -320,7 +347,7 @@ class Bible {
       }
     }
     this.normalize(reference);
-    return reference;
+    return this.set_reference(reference);
   }
 
   /**
@@ -328,7 +355,10 @@ class Bible {
    * @param {object} reference A bible.Reference object
    * @param {int} verses Number of verses to subtract
    */
-  subtract(reference, verses) {
+  subtract() {
+    let args = arguments;
+    let verses = args.length === 1 ? args[0] : args[1];
+    let reference = args.length === 1 ? this.get_reference() : args[0];
     // validate
     if (!this.isNumber(verses)) {
       throw '(bible.math.subtract) verses not a number';
@@ -371,7 +401,7 @@ class Bible {
       }
     }
     this.normalize(reference);
-    return reference;
+    return this.set_reference(reference);
   }
 
   distance() {
@@ -521,17 +551,6 @@ class Bible {
     return verses;
   }
 
-  toString() {
-    if (this.bookIndex < 0 || this.bookIndex >= this.books.length) return 'invalid';
-
-    return this.books[this.bookIndex].names[0] + ' ' + this.chapterAndVerse();
-  }
-
-  toShortUrl() {
-    if (this.bookIndex < 0 || this.bookIndex >= this.books.length) return 'invalid';
-    return 'http://bib.ly/' + this.books[this.bookIndex].names[1] + this.chapterAndVerse('.', '-', '-');
-  }
-
   /**
    * Changes chapter numbers to 0 based arrays (subtracts 1 from the chapters)
    * @param {object} reference Reference passed by reference
@@ -571,6 +590,7 @@ class Bible {
       (reference.chapter1 > 0 || (reference.chapter === -1 && reference.chapter1 === -1))
     );
   }
+
 }
 
 export default Bible;
