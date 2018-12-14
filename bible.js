@@ -535,15 +535,12 @@ class Bible {
    */
   verseDistance(bookIndex, chapter1, chapter2) {
     let chapters = this.books[bookIndex].verses;
-    let verses = 0;
-    //single chapter
-    if (chapter1 == chapter2) return 0;
+    return this.range(chapter1, chapter2).reduce((x, y) => chapters[y] + x, 0);
+  }
 
-    for (let i = chapter1; i < chapter2; i++) {
-      verses = chapters[i] + verses;
-    }
-
-    return verses;
+  // taken from SO
+  range(start, stop, step=1) {
+    return Array(stop - start).fill(start).map((x, y) => x + y * step);
   }
 
   /**
