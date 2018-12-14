@@ -1,5 +1,5 @@
 import { test, module } from 'qunit';
-import Bible from '../bible2';
+import Bible from '../bible';
 
 // deep equal failing for some reason
 // assert.deepEqual(b.parseReference('Gen 1:1'), expected);
