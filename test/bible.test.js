@@ -369,31 +369,31 @@ module('add', hooks => {
     deepEqual(result, expectedResults, assert);
   });
 
-  // // Pass verses which is not a number
-  // test('add verses passed not a number', assert => {
-  //   var ref1 = this.bible.parseReference('Genesis 4:20');
-  //   var n = '50';
-  //   assert.throws(
-  //     () => {
-  //       ref1.add(n);
-  //     },
-  //     /verses not a number/,
-  //     'Not a number'
-  //   );
-  // });
+  // Pass verses which is not a number
+  test('add verses passed not a number', assert => {
+    var ref1 = this.bible.parseReference('Genesis 4:20');
+    var n = '50';
+    assert.throws(
+      () => {
+        ref1.add(n);
+      },
+      /verses not a number/,
+      'Not a number'
+    );
+  });
 
-  // // Invalid ref
-  // test('add verses passed invalid reference', assert => {
-  //   var ref1 = this.bible.parseReference('Genesis2 5:20');
-  //   var n = 50;
-  //   assert.throws(
-  //     () => {
-  //       ref1.add(n);
-  //     },
-  //     /invalid/,
-  //     'Reference invalid'
-  //   );
-  // });
+  // Invalid ref
+  test('add verses passed invalid reference', assert => {
+    var ref1 = this.bible.parseReference('Genesis2 5:20');
+    var n = 50;
+    assert.throws(
+      () => {
+        ref1.add(n);
+      },
+      /invalid/,
+      'Reference invalid'
+    );
+  });
 
 });
 
@@ -462,31 +462,31 @@ module('subtract', hooks => {
     deepEqual(result, expectedResults, assert);
   });
 
-  // // Pass verses which is not a number
-  // test('subtract verses passed not a number', assert => {
-  //   var ref1 = this.bible.parseReference('Genesis 4:20');
-  //   var n = '50';
-  //   assert.throws(
-  //     () => {
-  //       ref1.subtract(n);
-  //     },
-  //     /verses not a number/,
-  //     'Not a number'
-  //   );
-  // });
+  // Pass verses which is not a number
+  test('subtract verses passed not a number', assert => {
+    var ref1 = this.bible.parseReference('Genesis 4:20');
+    var n = '50';
+    assert.throws(
+      () => {
+        ref1.subtract(n);
+      },
+      /verses not a number/,
+      'Not a number'
+    );
+  });
 
-  // // Invalid ref
-  // test('subtract verses passed invalid reference', assert => {
-  //   var ref1 = this.bible.parseReference('Genesis 0:20');
-  //   var n = 50;
-  //   assert.throws(
-  //     function() {
-  //       ref1.subtract(n);
-  //     },
-  //     /invalid/,
-  //     'Reference invalid'
-  //   );
-  // });
+  // Invalid ref
+  test('subtract verses passed invalid reference', assert => {
+    var ref1 = this.bible.parseReference('Genesis 0:20');
+    var n = 50;
+    assert.throws(
+      function() {
+        ref1.subtract(n);
+      },
+      /invalid/,
+      'Reference invalid'
+    );
+  });
 });
 
 /*Verse difference tests equal add and subtract tests*/
