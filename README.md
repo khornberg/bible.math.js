@@ -3,17 +3,36 @@ bible.math.js
 
 Provides methods to add or subtract verses from a given reference and to get a distance between one or two references.
 
+// does this work
+
+show `import bibleMath from "bible.math"`
+`npm install bible.math`
+
+// correct
+
+bible.Reference => bibleMath.get_reference() => reference object
+
+should the main class be Bible, BibleMath, BibleReference?
+
+testing directory and command
+
+// note
+
+no build command, assumes the user will run through build pipeline as desired
+this is an es6 module
+
+
 ## Usage
 
 Include `bible.math.min.js` in your project found in the `/dist`.
 
-Use `bible.parseReference` to get a reference object.  
-You can, however, manually create a reference object as defined below and use it.  
+Use `bible.parseReference` to get a reference object.
+You can, however, manually create a reference object as defined below and use it.
 
 ```
 var ref = bible.parseReference('Romans 1:2');
 ref.add(10); // changes reference object to Romans 1:12
-ref.toString(); // Romans 1:12 
+ref.toString(); // Romans 1:12
 ```
 
 For those with Bower: `bower install bible.math --save`
@@ -26,12 +45,12 @@ All references use the [bible.Reference object](#bible.reference-object) format.
 
 Example:
 Add 10 verses to 1 John 5:20
-```    
+```
 var ref1 = {bookIndex: 61, chapter: 5, verse: 20, chapter1: 5, verse1: 20, chapter2: -1, verse2: -1};
 ref1.add(10);
 ref1.toString(); // returns "2 John 1:9"
 ```
-Keys chapter and verse of the returned object remain unchanged. Chapter1 and verse1 are the correct chapter and verse.  
+Keys chapter and verse of the returned object remain unchanged. Chapter1 and verse1 are the correct chapter and verse.
 
 #### Subtract
 `bible.subtract(reference, verses) // changes reference to new value`
@@ -43,10 +62,10 @@ var ref1 = {bookIndex: 62, chapter: 1, verse: 7, chapter1: 1, verse1: 7, chapter
 var result = ref1.subtract(10);
 ref.toString(); // returns "1 John 5:19"
 ```
-Keys chapter and verse of the returned object remain unchanged. Chapter1 and verse1 are the correct chapter and verse.  
+Keys chapter and verse of the returned object remain unchanged. Chapter1 and verse1 are the correct chapter and verse.
 
-If subtracting a number of verses from the reference equals zero, then the last verse of the preceding chapter is returned.    
-For example, if seven verses are subtracted from 2 John 1:7, then a reference to 1 John 5:21 is returned.  
+If subtracting a number of verses from the reference equals zero, then the last verse of the preceding chapter is returned.
+For example, if seven verses are subtracted from 2 John 1:7, then a reference to 1 John 5:21 is returned.
 
 #### Distance
 `bible.distance(reference1, *reference2) // returns javascript object with chapters and verses`
@@ -59,8 +78,8 @@ var ref2 = {bookIndex: 2, chapter: 4, verse: 5, chapter1: 4, verse1: 5, chapter2
 bible.distance(ref1, ref2); // returns {'chapters': 92, 'verses': 2766}
 ```
 
-The distance calculation includes the referenced verses. The distance between Gen 1:1 and Gen 1:3 is three.  
-Why? If one is reading verses Gen 1:1-3, one has read three verses.  
+The distance calculation includes the referenced verses. The distance between Gen 1:1 and Gen 1:3 is three.
+Why? If one is reading verses Gen 1:1-3, one has read three verses.
 
 The distance between Gen 1 and Gen 3 is `{chapters: 2, verses: 80}`. There are two chapters between Gen 1:1 and Gen 3:1 and 80 verses from Gen 1:1 to Gen 3:24 (i.e. beginning of Gen 1 to the end of Gen 3).
 
@@ -82,7 +101,7 @@ verse2: _verse2
 -1 as a value of any key represents that the key is unused.
 
 ### Testing
-Tests are found in the `tests` directory.  
+Tests are found in the `tests` directory.
 Tests can be run either mannually by opening `tests/tests.html` in a browser or on the command line via `grunt test`.
 
 ## Change Log
@@ -125,6 +144,6 @@ Tests can be run either mannually by opening `tests/tests.html` in a browser or 
 Apache v2
 
 ### Copyright
-Kyle Hornberg 
+Kyle Hornberg
 
 Extends John Dyer's bible.js and bible.reference.js in [bib.ly](bib.ly) which is copyrighted by him and licensed under [Creative Commons 3.0](http://creativecommons.org/licenses/by/3.0/)
